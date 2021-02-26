@@ -43,7 +43,21 @@ let keyIndex = '{{liquidKi}}'
   }
   }]
 };
->
+fetch('/cart/add.js', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(formData)
+})
+.then(response => {
+  return response.json();
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
+
+">
   Add to cart 
   </button>
 
