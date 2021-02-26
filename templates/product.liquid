@@ -12,7 +12,7 @@
     {% for variant in product.variants %}
       {% if variant.available %}
         <option value="{{ variant.id }}">
-          {{ variant.title }} - {{ variant.price | money_with_currency }}
+          {{ variant.title }} - {{ variant.price | money_with_currency }} 
         </option>
       {% else %}
         <option disabled="disabled">
@@ -22,7 +22,7 @@
     {% endfor %}
   </select>
   {{ current_variant.price | money }}
-  <label for="Quantity">quantity</label>
+  <label for="Quantity">quantity{{current_variant.inventory_quantity}} </label>
   <input type="number" id="Quantity" name="quantity" value="1" min="1">
   <label for="enter-your-name"style='display:none'>Key Index</label>
   <input id="enter-your-name" style='display:none' type="text" name="properties[_cartIndex]" value='{{cart.item_count}}'>
