@@ -22,6 +22,24 @@
     {% endfor %}
   </select>
   {{ current_variant.price | money }}
+  
+  <style>
+  #addButton {
+    background-color: green;
+    color:white;
+  }
+  #addButton:hover {
+    background-color:blue;
+  }
+  #noAddButton {
+    background-color:grey;
+    border-width: 10px;
+    
+  }
+  #noAddButton:active {
+    background-color:white;
+  }
+  </style>
   <label for="Quantity">quantity{{current_variant.inventory_quantity}} </label>
   <input type="number" id="Quantity" name="quantity" value="1" min="1">
   <label for="enter-your-name"style='display:none'>Key Index</label>
@@ -29,37 +47,40 @@
   {% assign liquidQt = quantity.value %}
   {% assign liquidId = current_variant.id %}
   {% assign liquidKi = cart.item_count %}
+{% if current_variant.inventory_quantity == 0 %}
+    <fakebutton id='noAddButton' onclick=''>Add to cart</fakebutton>
+{% else %}
+    <button id='addButton'type="submit" onclick="
+    let id = '{{liquidId}}'
+    let quantity = '{{liquidQt}}'
+    let cartIndex = '{{liquidKi}}'
+      let formData = {
+    'items': [{
+      'id': id,
+      'quantity': quantity,
+      'properties':{
+        'cart_index': cartIndex
+      }
+      }]
+    };
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(response => {
+      return response.json();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 
-  <button type="submit" onclick="
-let id = '{{liquidId}}'
-let quantity = '{{liquidQt}}'
-let cartIndex = '{{liquidKi}}'
-  let formData = {
- 'items': [{
-  'id': id,
-  'quantity': quantity,
-  'properties':{
-    'cart_index': cartIndex
-  }
-  }]
-};
-fetch('/cart/add.js', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(formData)
-})
-.then(response => {
-  return response.json();
-})
-.catch((error) => {
-  console.error('Error:', error);
-});
-
-">
-  Add to cart 
-  </button>
+    ">
+      Add to cart 
+      </button>
+{% endif %}
 
 </form>
 <div>{{ product.description }}</div>
