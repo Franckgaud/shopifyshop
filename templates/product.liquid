@@ -40,7 +40,7 @@
     background-color:white;
   }
   </style>
-  <label for="Quantity">quantity{{current_variant.inventory_quantity}} </label>
+  <label for="Quantity">quantity </label>
   <input type="number" id="Quantity" name="quantity" value="1" min="1">
   <label for="enter-your-name"style='display:none'>Key Index</label>
   <input id="enter-your-name" style='display:none' type="text" name="properties[_cartIndex]" value='{{cart.item_count}}'>
@@ -81,6 +81,8 @@
       Add to cart 
       </button>
 {% endif %}
-
+{% if current_variant.inventory_quantity < 5%}
+<p>Low stock</p>
+{% endif %}
 </form>
 <div>{{ product.description }}</div>
