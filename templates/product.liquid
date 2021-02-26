@@ -25,17 +25,12 @@
   <label for="Quantity">quantity</label>
   <input type="number" id="Quantity" name="quantity" value="1" min="1">
   <label for="enter-your-name"style='display:none'>Key Index</label>
-  <input id="enter-your-name" type="text" name="properties[_keyIndex]" value='{{cart.item_count}}'>
+  <input id="enter-your-name" style='display:none' type="text" name="properties[_keyIndex]" value='{{cart.item_count}}'>
   {% assign liquidQt = quantity.value %}
   {% assign liquidId = current_variant.id %}
   {% assign liquidKi = cart.item_count %}
-<div>{{id}} </div>
 
-  <button type="submit" name="add" id="AddToCart" onclick="
-">
-  Add to cart 
-  </button>
-<div onclick="
+  <button type="submit" onclick="
 let id = '{{liquidId}}'
 let quantity = '{{liquidQt}}'
 let keyIndex = '{{liquidKi}}'
@@ -48,8 +43,9 @@ let keyIndex = '{{liquidKi}}'
   }
   }]
 };
-console.log(formData)
+>
+  Add to cart 
+  </button>
 
-">data time</div>
 </form>
 <div>{{ product.description }}</div>
