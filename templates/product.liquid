@@ -24,6 +24,42 @@
   {{ current_variant.price | money }}
   <label for="Quantity">quantity</label>
   <input type="number" id="Quantity" name="quantity" value="1" min="1">
-  <button type="submit" name="add" id="AddToCart">Add to cart</button>
+  <label for="enter-your-name"style='display:none'>Key Index</label>
+  <input id="enter-your-name" style='display:none' type="text" name="properties[_cartIndex]" value='{{cart.item_count}}'>
+  {% assign liquidQt = quantity.value %}
+  {% assign liquidId = current_variant.id %}
+  {% assign liquidKi = cart.item_count %}
+
+  <button type="submit" onclick="
+let id = '{{liquidId}}'
+let quantity = '{{liquidQt}}'
+let cartIndex = '{{liquidKi}}'
+  let formData = {
+ 'items': [{
+  'id': id,
+  'quantity': quantity,
+  'properties':{
+    'cart_index': cartIndex
+  }
+  }]
+};
+fetch('/cart/add.js', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(formData)
+})
+.then(response => {
+  return response.json();
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
+
+">
+  Add to cart 
+  </button>
+
 </form>
 <div>{{ product.description }}</div>
