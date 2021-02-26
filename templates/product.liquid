@@ -25,7 +25,7 @@
   <label for="Quantity">quantity</label>
   <input type="number" id="Quantity" name="quantity" value="1" min="1">
   <label for="enter-your-name"style='display:none'>Key Index</label>
-  <input id="enter-your-name" style='display:none' type="text" name="properties[_keyIndex]" value='{{cart.item_count}}'>
+  <input id="enter-your-name" style='display:none' type="text" name="properties[_cartIndex]" value='{{cart.item_count}}'>
   {% assign liquidQt = quantity.value %}
   {% assign liquidId = current_variant.id %}
   {% assign liquidKi = cart.item_count %}
@@ -33,13 +33,13 @@
   <button type="submit" onclick="
 let id = '{{liquidId}}'
 let quantity = '{{liquidQt}}'
-let keyIndex = '{{liquidKi}}'
+let cartIndex = '{{liquidKi}}'
   let formData = {
  'items': [{
   'id': id,
   'quantity': quantity,
   'properties':{
-    'key_index': keyIndex
+    'cart_index': cartIndex
   }
   }]
 };
