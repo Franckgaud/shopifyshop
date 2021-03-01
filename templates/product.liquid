@@ -41,6 +41,7 @@
     background-color:white;
   }
   </style>
+
   <label for="Quantity">quantity </label>
   <input type="number" id="Quantity" name="quantity" value="1" min="1"> 
 
@@ -55,8 +56,20 @@
 {% if current_variant.inventory_quantity == 0 %}
     <fakebutton id='noAddButton' onclick=''>Add to cart</fakebutton>
 {% else %}
-    <button id='addButton'type="submit" onclick="
-    let id = '{{liquidId}}'
+    <button id='addButton'type="submit" >
+      Add to cart 
+      </button>
+
+{% endif %}
+{% if current_variant.inventory_quantity < 5%}
+<p>Low stock</p>
+{% endif %}
+</form>
+<div>{{ product.description }}</div>
+<script>
+
+document.getElementById('addButton').addEventListener('onclick', ()=> {
+  let id = '{{liquidId}}'
     let quantity = '{{liquidQt}}'
     let cartIndex = '{{liquidCi}}'
       let formData = {
@@ -64,7 +77,7 @@
       'id': id,
       'quantity': quantity,
       'properties':{
-        '_cartIndex': cartIndex
+        'cartIndex': cartIndex
       }
       }]
     };
@@ -80,18 +93,6 @@
     })
     .catch((error) => {
       console.error('Error:', error);
-    });
-
-    ">
-      Add to cart 
-      </button>
-{% endif %}
-{% if current_variant.inventory_quantity < 5%}
-<p>Low stock</p>
-{% endif %}
-</form>
-<div>{{ product.description }}</div>
-<script>
-
+    })})
 </script>
 <footer>this is a footer</footer>
