@@ -12,15 +12,17 @@
         {% for item in cart.items %}
           <tr>
             <td>
-         
+            {% assign cart_index = cart.properties.cartIndex | 0 %}
+            {% {% increment cart_index %}%}
             <div>{{cart.item}}</div>
               <a href="{{ item.url | within: collections.all }}">
                 <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
+                {% assign test = item.properties.cartIndex %}
               </a>
             </td>
             <td>
               <a href="{{ item.url }}">{{ item.product.title }}</a>
-              {{ item.variant.title }}   {{item.properties.cart_index}}
+              {{ item.variant.title }}  
               <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">remove</a>
             </td>
             <td>{{ item.price | money }}</td>
@@ -40,6 +42,11 @@
       <p>sub total : {{ cart.total_price | money }}</p>
       <button type="submit" name="update">Update</button>
       <button type="submit" name="checkout">Checkout</button>
+      
+      <button onclick="
+    let test = '{{test}}'
+    console.log(test)
+      ">log it</button>
     </div>
   </form>
 {% else %}
