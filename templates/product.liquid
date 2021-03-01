@@ -1,5 +1,6 @@
 {% assign current_variant = product.selected_or_first_available_variant %}
 {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
+
 <img src="{{ featured_image | img_url: 'large' }}" alt="{{ featured_image.alt | escape }}" id="ProductPhotoImg">
 {% for image in product.images %}
   <a href="{{ image.src | img_url: 'large' }}">
@@ -12,7 +13,7 @@
     {% for variant in product.variants %}
       {% if variant.available %}
         <option value="{{ variant.id }}">
-          {{ variant.title }} - {{ variant.price | money_with_currency }}
+          {{ variant.title }} - {{ variant.price | money_with_currency }} 
         </option>
       {% else %}
         <option disabled="disabled">
@@ -22,44 +23,76 @@
     {% endfor %}
   </select>
   {{ current_variant.price | money }}
-  <label for="Quantity">quantity</label>
-  <input type="number" id="Quantity" name="quantity" value="1" min="1">
-  <label for="enter-your-name"style='display:none'>Key Index</label>
-  <input id="enter-your-name" style='display:none' type="text" name="properties[_cartIndex]" value='{{cart.item_count}}'>
+  
+  <style>
+  #addButton {
+    background-color: green;
+    color:white;
+  }
+  #addButton:hover {
+    background-color:blue;
+  }
+  #noAddButton {
+    background-color:grey;
+    border-width: 10px;
+    
+  }
+  #noAddButton:active {
+    background-color:white;
+  }
+  </style>
+  <label for="Quantity">quantity </label>
+  <input type="number" id="Quantity" name="quantity" value="1" min="1"> 
+
   {% assign liquidQt = quantity.value %}
   {% assign liquidId = current_variant.id %}
-  {% assign liquidKi = cart.item_count %}
+  {% assign liquidCi = cart.item_count |plus: 0%}
+  {% increment liquidCi %}
+  <label for="enter-your-name"style='display:none'>Key Index</label>
+  <input id="enter-your-name" style='display:none' type="text" name="properties[_cartIndex]" value='{{cart.item_count}}'>
 
-  <button type="submit" onclick="
-let id = '{{liquidId}}'
-let quantity = '{{liquidQt}}'
-let cartIndex = '{{liquidKi}}'
-  let formData = {
- 'items': [{
-  'id': id,
-  'quantity': quantity,
-  'properties':{
-    'cart_index': cartIndex
-  }
-  }]
-};
-fetch('/cart/add.js', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(formData)
-})
-.then(response => {
-  return response.json();
-})
-.catch((error) => {
-  console.error('Error:', error);
-});
+  {% assign liquidCurrInv = current_variant.inventory_quantity %}
+{% if current_variant.inventory_quantity == 0 %}
+    <fakebutton id='noAddButton' onclick=''>Add to cart</fakebutton>
+{% else %}
+    <button id='addButton'type="submit" onclick="
+    let id = '{{liquidId}}'
+    let quantity = '{{liquidQt}}'
+    let cartIndex = '{{liquidCi}}'
+      let formData = {
+    'items': [{
+      'id': id,
+      'quantity': quantity,
+      'properties':{
+        '_cartIndex': cartIndex
+      }
+      }]
+    };
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(response => {
+      return response.json();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 
-">
-  Add to cart 
-  </button>
-
+    ">
+      Add to cart 
+      </button>
+{% endif %}
+{% if current_variant.inventory_quantity < 5%}
+<p>Low stock</p>
+{% endif %}
 </form>
 <div>{{ product.description }}</div>
+<script>
+let productLeft = '{{liquidCurrInv}}'
+alert(' There is only ' + productLeft + ' left, buy now before someone else does !!!!',
+)</script>
+<footer>this is a footer</footer>
