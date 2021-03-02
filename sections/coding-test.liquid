@@ -1,11 +1,12 @@
 
 
 <h6 >{{section.settings.footer}}</h6>
-{% javascript %}
+{% assign randomTitle = section.settings.footer %} 
+<script>
 
-let random = {{ section.settings.footer}}
-console.log(random)
-{% endjavascript %}
+
+console.log('{{section.settings.footer}}')
+</script>
 {% schema %}
     {
         "name": "Coding Test",
