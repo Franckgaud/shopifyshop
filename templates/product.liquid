@@ -8,7 +8,7 @@
   </a>
 {% endfor %}
 <h1>{{ product.title }}</h1>
-<form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+
   <select name="id" id="productSelect">
     {% for variant in product.variants %}
       {% if variant.available %}
@@ -54,9 +54,9 @@
 
   {% assign liquidCurrInv = current_variant.inventory_quantity %}
 {% if current_variant.inventory_quantity == 0 %}
-    <fakebutton id='noAddButton' onclick=''>Add to cart</fakebutton>
+    <fakebutton id='noAddButton'>Add to cart</fakebutton>
 {% else %}
-    <button id='addButton'type="submit" >
+    <button id='addButton' >
       Add to cart 
       </button>
 
@@ -64,11 +64,10 @@
 {% if current_variant.inventory_quantity < 5%}
 <p>Low stock</p>
 {% endif %}
-</form>
 <div>{{ product.description }}</div>
 <script>
 
-document.getElementById('addButton').addEventListener('onclick', ()=> {
+document.getElementById('addButton').addEventListener('click', ()=> {
   let id = '{{liquidId}}'
     let quantity = '{{liquidQt}}'
     let cartIndex = '{{liquidCi}}'
