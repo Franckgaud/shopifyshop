@@ -1,7 +1,4 @@
 
-{% section 
-  
-  %}
 {% assign current_variant = product.selected_or_first_available_variant %}
 {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
 
@@ -65,7 +62,7 @@
 <p>Low stock</p>
 {% endif %}
 <div>{{ product.description }}</div>
-<div id="shopify-section-randomFooter" class="shopify-section"></div>
+{%section "coding-test" %}
 <script>
 
 document.getElementById('addButton').addEventListener('click', ()=> {
