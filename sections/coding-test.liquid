@@ -1,0 +1,21 @@
+<h3>{{section.settings.footer}}</h3>
+<p>{{section.settings.description}}</p>
+
+
+{% schema %}
+    {
+        "name": "Coding Test",
+        "settings": [
+            {
+                "type":"text",
+                "label": "Random Text",
+                "id":"footer"
+            },
+            {
+                "type":"richtext",
+                "label":"your description",
+                "id": "description"
+            }
+        ]
+    }
+{% endschema %}
