@@ -71,12 +71,24 @@
 <p>Low stock</p>
 {% endif %}
 <div>{{ product.description }}</div>
-<<<<<<< HEAD
+<div id="modal"> <!-- data-iziModal-fullscreen="true"  data-iziModal-title="Welcome"  data-iziModal-subtitle="Subtitle"  data-iziModal-icon="icon-home" -->
+    <!-- Modal content -->
+</div>
+ 
+<!-- Trigger to open Modal -->
+<a href="https://github.com/marcelodolza/iziModal" class="trigger">Modal</a>
 {% section "coding-test" %}
-=======
-{%section "coding-test" %}
->>>>>>> 7d53de4780fd5aa4625d027cdbe8cb1c5c0071ae
+
+
 <script>
+$("#modal").iziModal();
+$(document).on('click', '.trigger', function (event) {
+    event.preventDefault();
+    // $('#modal').iziModal('setZindex', 99999);
+    // $('#modal').iziModal('open', { zindex: 99999 });
+    $('#modal').iziModal('open');
+});
+
 
 document.getElementById('addButton').addEventListener('click', ()=> {
   let id = '{{liquidId}}'
