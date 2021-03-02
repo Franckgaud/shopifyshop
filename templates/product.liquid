@@ -1,3 +1,7 @@
+
+{% section 
+  
+  %}
 {% assign current_variant = product.selected_or_first_available_variant %}
 {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
 
@@ -34,7 +38,6 @@
   }
   #noAddButton {
     background-color:grey;
-    border-width: 10px;
     
   }
   #noAddButton:active {
@@ -51,7 +54,7 @@
   
   {% assign liquidCurrInv = current_variant.inventory_quantity %}
 {% if current_variant.inventory_quantity == 0 %}
-    <fakebutton id='noAddButton'>Add to cart</fakebutton>
+    <button id='noAddButton'>Add to cart</button>
 {% else %}
     <button id='addButton' >
       Add to cart 
@@ -62,6 +65,7 @@
 <p>Low stock</p>
 {% endif %}
 <div>{{ product.description }}</div>
+<div id="shopify-section-randomFooter" class="shopify-section"></div>
 <script>
 
 document.getElementById('addButton').addEventListener('click', ()=> {
@@ -92,4 +96,3 @@ document.getElementById('addButton').addEventListener('click', ()=> {
       console.error('Error:', error);
     })})
 </script>
-<footer>this is a footer</footer>
