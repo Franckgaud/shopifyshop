@@ -47,11 +47,8 @@
 
   {% assign liquidQt = quantity.value %}
   {% assign liquidId = current_variant.id %}
-  {% assign liquidCi = cart.item_count |plus: 0%}
-  {% increment liquidCi %}
-  <label for="enter-your-name"style='display:none'>Key Index</label>
-  <input id="enter-your-name" style='display:none' type="text" name="properties[_cartIndex]" value='{{cart.item_count}}'>
-
+  {% assign liquidCi = cart.item_count %}
+  
   {% assign liquidCurrInv = current_variant.inventory_quantity %}
 {% if current_variant.inventory_quantity == 0 %}
     <fakebutton id='noAddButton'>Add to cart</fakebutton>
@@ -71,7 +68,8 @@ document.getElementById('addButton').addEventListener('click', ()=> {
   let id = '{{liquidId}}'
     let quantity = '{{liquidQt}}'
     let cartIndex = '{{liquidCi}}'
-      let formData = {
+    cartIndex = parseInt(cartIndex) +1
+    let formData = {
     'items': [{
       'id': id,
       'quantity': quantity,
@@ -80,6 +78,7 @@ document.getElementById('addButton').addEventListener('click', ()=> {
       }
       }]
     };
+    console.log(cartIndex )
     fetch('/cart/add.js', {
       method: 'POST',
       headers: {
