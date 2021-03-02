@@ -1,14 +1,11 @@
-<div>
-
-<h6>{{section.settings.footer}}</h6>
-{% assign randomTitle = section.settings.footer %}
-<script>
-let randoTitle = {{randomTitle}}
-console.log(randomTitle)
-</script>
 
 
-</div>
+<h6 >{{section.settings.footer}}</h6>
+{% javascript %}
+
+let random = {{ section.settings.footer}}
+console.log(random)
+{% endjavascript %}
 {% schema %}
     {
         "name": "Coding Test",
