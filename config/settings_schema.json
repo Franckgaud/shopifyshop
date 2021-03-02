@@ -13,10 +13,19 @@
         {
             "type":"text",
             "label": "Random Text",
-            "id":"footer",
-            "content":"This is a biiiiiggg test"
+            "id":"footer"
         }
 
     ]
-}
+  },
+  {
+    "name":"Collection Selector",
+    "settings": [
+      {
+        "type":"collection",
+        "id":"collection_selection",
+        "label":"Selected Collection"
+      }
+    ]
+  }
 ]
