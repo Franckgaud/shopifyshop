@@ -1,3 +1,4 @@
+
 {% assign current_variant = product.selected_or_first_available_variant %}
 {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
 
@@ -8,7 +9,7 @@
   </a>
 {% endfor %}
 <h1>{{ product.title }}</h1>
-<form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+
   <select name="id" id="productSelect">
     {% for variant in product.variants %}
       {% if variant.available %}
@@ -34,37 +35,48 @@
   }
   #noAddButton {
     background-color:grey;
-    border-width: 10px;
     
   }
   #noAddButton:active {
     background-color:white;
   }
   </style>
+
   <label for="Quantity">quantity </label>
   <input type="number" id="Quantity" name="quantity" value="1" min="1"> 
 
   {% assign liquidQt = quantity.value %}
   {% assign liquidId = current_variant.id %}
-  {% assign liquidCi = cart.item_count |plus: 0%}
-  {% increment liquidCi %}
-  <label for="enter-your-name"style='display:none'>Key Index</label>
-  <input id="enter-your-name" style='display:none' type="text" name="properties[_cartIndex]" value='{{cart.item_count}}'>
-
+  {% assign liquidCi = cart.item_count %}
+  
   {% assign liquidCurrInv = current_variant.inventory_quantity %}
 {% if current_variant.inventory_quantity == 0 %}
-    <fakebutton id='noAddButton' onclick=''>Add to cart</fakebutton>
+    <button id='noAddButton'>Add to cart</button>
 {% else %}
-    <button id='addButton'type="submit" onclick="
-    let id = '{{liquidId}}'
+    <button id='addButton' >
+      Add to cart 
+      </button>
+
+
+{% endif %}
+{% if current_variant.inventory_quantity < 5%}
+<p>Low stock</p>
+{% endif %}
+<div>{{ product.description }}</div>
+{% section "coding-test" %}
+<script>
+
+document.getElementById('addButton').addEventListener('click', ()=> {
+  let id = '{{liquidId}}'
     let quantity = '{{liquidQt}}'
     let cartIndex = '{{liquidCi}}'
-      let formData = {
+    cartIndex = parseInt(cartIndex) +1
+    let formData = {
     'items': [{
       'id': id,
       'quantity': quantity,
       'properties':{
-        '_cartIndex': cartIndex
+        'cartIndex': cartIndex
       }
       }]
     };
@@ -80,20 +92,5 @@
     })
     .catch((error) => {
       console.error('Error:', error);
-    });
-
-    ">
-      Add to cart 
-      </button>
-{% endif %}
-{% if current_variant.inventory_quantity < 5%}
-<p>Low stock</p>
-{% endif %}
-</form>
-<div>{{ product.description }}</div>
-<script>
-let productLeft = '{{liquidCurrInv}}'
-alert(' There is only ' + productLeft + ' left, buy now before someone else does !
-', 'currently in your cart :')
+    })})
 </script>
-<footer>this is a footer</footer>
